@@ -1,0 +1,71 @@
+{
+  "name": "@chronicled/rabbitmq-adaptor-js",
+  "version": "1.0.8",
+  "description": "This is a repository that packages and exposes rabbitmq functions necessary as a standalone library",
+  "main": "dist/lib/index.js",
+  "types": "dist/lib/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "test": "ts-mocha -p ./tsconfig.json ./test/*.test.ts",
+    "lint": "eslint --ext .js,ts . && prettier --check \"./**/*.{js,ts}\"",
+    "lint:fix": "prettier --write \"./**/*.{js,ts}\"; eslint --ext .js,ts --fix ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chronicled/rabbitmq-adaptor-javascript.git"
+  },
+  "author": "Chronicled Devs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chronicled/rabbitmq-adaptor-javascript/issues"
+  },
+  "homepage": "https://github.com/chronicled/rabbitmq-adaptor-javascript#readme",
+  "engines": {
+    "node": "~14.16"
+  },
+  "dependencies": {
+    "@chronicled/platform-utils-js": "^1.2.2",
+    "@types/amqplib": "^0.5.17",
+    "@types/lodash": "^4.14.161",
+    "@types/uuid": "^8.3.0",
+    "amqplib": "^0.8.0",
+    "lodash": "^4.17.21",
+    "uuid": "^8.3.1"
+  },
+  "devDependencies": {
+    "@chronicled/eslint-config": "^0.0.7",
+    "@types/chai": "^4.3.1",
+    "@types/chai-as-promised": "^7.1.5",
+    "@types/mocha": "^8.2.3",
+    "@types/rascal": "^10.0.3",
+    "@typescript-eslint/eslint-plugin": "^4.4.0",
+    "chai": "^4.3.6",
+    "chai-as-promised": "^7.1.1",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^6.12.0",
+    "eslint-config-semistandard": "^15.0.1",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-config-standard-with-typescript": "^19.0.1",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "husky": "^7.0.4",
+    "lint-staged": "^11.2.6",
+    "mocha": "^9.2.2",
+    "prettier": "^2.1.2",
+    "pretty-quick": "^3.0.2",
+    "ts-mocha": "^9.0.2",
+    "typescript": "^4.0.3"
+  },
+  "lint-staged": {
+    "**/*.{js,ts}": "eslint --ext .js,.ts --fix"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged && lint-staged"
+    }
+  }
+}

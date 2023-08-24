@@ -1,0 +1,66 @@
+defaults: &defaults
+  working_directory: ~/rabbitmq-adaptor-js
+  docker:
+    - image: circleci/node:14
+
+version: 2
+jobs:
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: Authenticate NPM
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc;
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}--{{ checksum "package-lock.json" }}
+      - run: npm ci
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}--{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
+
+  static_tests:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}--{{ checksum "package-lock.json" }}
+      - run: npm run lint
+
+  deployment:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}--{{ checksum "package-lock.json" }}
+      - run:
+          name: Setup NPM Publication Parameters
+          command: |
+            read -r NPM_TAG NPM_VERSION_STEP <<<$(.circleci/get-npm-tag.sh);
+            echo "export NPM_TAG='$NPM_TAG'" >> $BASH_ENV;
+            echo "export NPM_VERSION_STEP='$NPM_VERSION_STEP'" >> $BASH_ENV;
+            echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc;
+      - run: npm ci
+      - run: npm run build
+      - run: npm --no-git-tag-version --allow-same-version version `npm view @chronicled/rabbitmq-adaptor-js dist-tags.$NPM_TAG`
+      - run: npm --no-git-tag-version version $NPM_VERSION_STEP
+      - run: npm publish --tag $NPM_TAG
+
+workflows:
+  version: 2
+  default:
+    jobs:
+      - build
+      - static_tests:
+          requires:
+            - build
+
+      - deployment:
+          requires:
+            - static_tests
+          filters:
+            branches:
+              only:
+                - master
+                - develop

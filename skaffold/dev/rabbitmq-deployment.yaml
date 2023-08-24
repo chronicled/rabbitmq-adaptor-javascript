@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: rabbitmq-dev
+  name: rabbitmq-dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: rabbitmq-dev
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        io.kompose.service: rabbitmq-dev
+    spec:
+      hostname: rabbitmq-dev
+      containers:
+        - image: rabbitmq:3-management
+          name: rabbitmq-dev
+          ports:
+            - containerPort: 5672
+            - containerPort: 15672
+          resources: {}
+      restartPolicy: Always
+status: {}

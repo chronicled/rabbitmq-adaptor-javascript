@@ -1,0 +1,15 @@
+apiVersion: skaffold/v1beta11
+kind: Config
+build:
+  tagPolicy:
+    envTemplate:
+      template: '{{.IMAGE_NAME}}:latest'
+  local:
+    useDockerCLI: true
+    useBuildkit: false
+    push: false
+deploy:
+  kubectl:
+    manifests:
+      - dev/rabbitmq-deployment.yaml
+      - dev/rabbitmq-service.yaml
