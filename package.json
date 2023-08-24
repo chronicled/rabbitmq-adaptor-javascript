@@ -1,0 +1,39 @@
+{
+  "name": "@chronicled/rabbitmq-adaptor-js",
+  "version": "0.0.0-alpha.10",
+  "description": "This is a repository that packages and exposes rabbitmq functions necessary as a standalone library",
+  "main": "index.js",
+  "scripts": {
+    "lint": "./node_modules/.bin/eslint --ignore-path .gitignore --quiet ./lib ./test"
+  },
+  "files": [
+    "lib",
+    "test",
+    "docker"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chronicled/rabbitmq-adaptor-javascript.git"
+  },
+  "author": "Chronicled Devs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chronicled/rabbitmq-adaptor-javascript/issues"
+  },
+  "homepage": "https://github.com/chronicled/rabbitmq-adaptor-javascript#readme",
+  "dependencies": {
+    "@chronicled/platform-utils-js": "0.0.0-alpha.2",
+    "amqplib": "^0.5.3",
+    "bluebird": "^3.5.4",
+    "lodash": "^4.17.11",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-node": "^9.0.1",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-standard": "^4.0.0"
+  }
+}
