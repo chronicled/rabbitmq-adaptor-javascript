@@ -51,7 +51,7 @@ workflows:
   version: 2
   default:
     jobs:
-      - build
+      - build:
           context:
             - npm
       - static_tests:
