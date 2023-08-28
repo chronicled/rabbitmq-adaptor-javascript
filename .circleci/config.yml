@@ -52,11 +52,14 @@ workflows:
   default:
     jobs:
       - build
+          context: npm
       - static_tests:
+          context: npm
           requires:
             - build
 
       - deployment:
+          context: npm
           requires:
             - static_tests
           filters:
