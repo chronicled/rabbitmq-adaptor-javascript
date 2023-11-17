@@ -405,10 +405,8 @@ export class RabbitMQ {
       };
       const messageId = msg.properties.messageId;
       const headers = msg.properties.headers as H;
-      const {
-        'correlation-id': correlationId,
-        'causation-id': causationId
-      } = headers;
+      const { 'correlation-id': correlationId, 'causation-id': causationId } =
+        headers;
 
       return withCorrelationContext(
         { correlationId, causationId, messageId, inputMessage },
