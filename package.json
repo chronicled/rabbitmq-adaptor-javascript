@@ -1,6 +1,6 @@
 {
   "name": "@chronicled/rabbitmq-adaptor-js",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "This is a repository that packages and exposes rabbitmq functions necessary as a standalone library",
   "main": "dist/lib/index.js",
   "types": "dist/lib/index.d.ts",
@@ -26,10 +26,10 @@
   },
   "dependencies": {
     "@chronicled/platform-utils-js": "^2.0.0",
-    "@types/amqplib": "^0.5.17",
+    "@types/amqplib": "^0.10.3",
     "@types/lodash": "^4.14.161",
     "@types/uuid": "^8.3.0",
-    "amqplib": "^0.8.0",
+    "amqplib": "^0.10.3",
     "lodash": "^4.17.21",
     "uuid": "^8.3.1"
   },
@@ -42,6 +42,7 @@
     "@typescript-eslint/eslint-plugin": "^4.4.0",
     "chai": "^4.3.6",
     "chai-as-promised": "^7.1.1",
+    "delay": "^6.0.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^6.12.0",
     "eslint-config-semistandard": "^15.0.1",

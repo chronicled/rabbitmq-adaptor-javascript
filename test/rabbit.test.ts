@@ -10,7 +10,7 @@ import 'mocha';
 import * as fs from 'fs';
 import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
-import Bluebird from 'bluebird';
+import delay from 'delay';
 import { connectMQ, RabbitMQ, RabbitMQMessage } from '../lib';
 import { withCorrelationContext, Logger } from '@chronicled/platform-utils-js';
 
@@ -206,7 +206,7 @@ describe('Rabbit tests', (): void => {
 
     await Promise.all([drainEventReceivedDone.promise, ...messagePromises]);
 
-    await Bluebird.delay(100);
+    await delay(100);
 
     messagesReceived.should.equal(messagePromises.length);
   }).timeout(20000);
@@ -222,10 +222,10 @@ describe('Rabbit tests', (): void => {
       'BlockchainEvent.Custody.MemberRegistered',
       { key: 'val' }
     );
-    await Bluebird.delay(100);
+    await delay(100);
     received.should.equal(0);
     await rabbit.resume();
-    await Bluebird.delay(100);
+    await delay(100);
     received.should.equal(1);
     return rabbit.unsubscribe(subscription);
   }).timeout(5000);
