@@ -298,13 +298,13 @@ export class RabbitMQ {
           data: str,
           headers: options.headers
         });
-      } catch (err) {
+      } catch (err: any) {
         this.raise('Error while publishing', err);
       }
     });
   }
 
-  async subscribe<P, H extends CustomHeaders>(
+  async subscribe<P extends {}, H extends CustomHeaders>(
     name: string,
     onMessage: OnMessageHandler<P, H>,
     options: SubscribeOptions = {},
@@ -345,7 +345,7 @@ export class RabbitMQ {
       });
 
       return consumer;
-    } catch (err) {
+    } catch (err: any) {
       this.raise('Error in subscribe', err);
     }
   }
@@ -388,7 +388,7 @@ export class RabbitMQ {
     return this.reregister();
   }
 
-  private onMessageWrapper<P, H extends CustomHeaders>(
+  private onMessageWrapper<P extends {}, H extends CustomHeaders>(
     onMessage: OnMessageHandler<P, H>,
     { name, ack, requeue }: OnMessageWrapperOptions
   ) {
@@ -405,10 +405,8 @@ export class RabbitMQ {
       };
       const messageId = msg.properties.messageId;
       const headers = msg.properties.headers as H;
-      const {
-        'correlation-id': correlationId,
-        'causation-id': causationId
-      } = headers;
+      const { 'correlation-id': correlationId, 'causation-id': causationId } =
+        headers;
 
       return withCorrelationContext(
         { correlationId, causationId, messageId, inputMessage },
@@ -543,12 +541,13 @@ export interface SubscribeOptions {
   consumerTag?: string | undefined;
 }
 
-export type OnMessageHandler<P, H extends CustomHeaders = CustomHeaders> = (
-  msg: RabbitMQMessage<P, H>
-) => void | Promise<void>;
+export type OnMessageHandler<
+  P extends {},
+  H extends CustomHeaders = CustomHeaders
+> = (msg: RabbitMQMessage<P, H>) => void | Promise<void>;
 
 export interface SubsrcribeArguments<
-  P = any,
+  P extends {} = any,
   H extends CustomHeaders = CustomHeaders
 > {
   name: string;
